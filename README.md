@@ -5,6 +5,4 @@ Players play as blocks with a goal to get one player to the portal at the right 
 Play with four players, a red square, blue square, green square, and yellow square.
 The player has the option to invite friends to play or enjoy the game with random people.
 
-###### *Created by EliTheCoder and Huday*
-
-<sup> *Open Software Liscense 3.0* </sup>
+###### *Created by EliTheCoder and Huday* <sup>OS 3.0 Liscense</sup>
