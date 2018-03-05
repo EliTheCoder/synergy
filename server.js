@@ -1,12 +1,12 @@
 // Dis is Eli's server code. Pweez do not touch because he spent a lot of time on it :).
 const express = require('express');
-const path = require();
+const path = require("path");
 const app = express();
 
 //Static resources server
 app.use(express.static(path.join(__dirname, '/static')));
 
-const server = app.listen(process.env.PORT || 8082, function() {
+const server = app.listen(process.env.PORT || 80, function() {
   const port = server.address().port;
   console.log('Server running at port %s', port);
 });
