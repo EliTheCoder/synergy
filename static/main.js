@@ -1,10 +1,15 @@
-// JS CODE
 function setup() {
-  createCanvas(1000,600);
-  background(0);
+  var cnv = createCanvas(1000,600);
+  cnv.parent("border");
 }
+
+var bluecolor = "#002aff";
 
 function draw() {
   translate(width/2,height/2);
-  rect(0,0,100);
+  push();
+  fill(bluecolor);
+  noStroke();
+  rect(0,0,50,50);
+  pop();
 }
