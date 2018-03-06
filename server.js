@@ -1,24 +1,44 @@
-// Dis is Eli's server code. Pweez do not touch because he spent a lot of time on it :).
+// change this if you want:
+
+const port = 80;
+
+// no food or drink beyond this point
 const express = require('express');
 const path = require("path");
 const app = express();
 
-//Static resources server
+function logMessage(type, message) {
+  let typeString;
+  switch (type) {
+    case 0:
+      typeString = "INFO";
+      break;
+    case 1:
+      typeString = "WARNING";
+      break;
+    case 2:
+      typeString = "ERROR";
+      break;
+    default:
+      typeString = "LOG";
+  }
+  let datestamp = new Date();
+  console.log(`[${typeString.toUpperCase()}] {${datestamp.toUpperCase()}} ${message.toUpperCase()}`);
+}
+// provides static file like index.html and main.js
 app.use(express.static(path.join(__dirname, '/static')));
 
-const server = app.listen(process.env.PORT || 80, function() {
-  const port = server.address().port;
-  console.log('Server running at port %s', port);
+const server = app.listen(process.env.PORT || port, () => {
+  logMessage(0, "SERVER RUNNING: PORT: " + port);
 });
 
 const io = require('socket.io')(server);
 
-/* Connection events */
-
-io.on('connection', function(socket) {
-  console.log('User connected');
-  socket.on('move', function(data) {
-    socket.broadcast.emit('addcube', {
+io.on('connection', socket => {
+  logMessage(0, "CLIENT CONNECTED WITH IP ADDRESS: " + socket.request.connection.remoteAddress.split(':').slice(3)[0] + " AND");
+  socket.on('move', data => {
+    socket.broadcast.emit('movePlayer', data => {
+      uuid: socket.id,
       x: data.x,
       y: data.y
     });
