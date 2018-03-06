@@ -23,7 +23,7 @@ function logMessage(type, message) {
       typeString = "LOG";
   }
   let datestamp = new Date();
-  console.log(`[${typeString.toUpperCase()}] {${datestamp.toUpperCase()}} ${message.toUpperCase()}`);
+  console.log(`[${typeString.toUpperCase()}] {${datestamp}} ${message.toUpperCase()}`);
 }
 // provides static file like index.html and main.js
 app.use(express.static(path.join(__dirname, '/static')));
@@ -37,10 +37,10 @@ const io = require('socket.io')(server);
 io.on('connection', socket => {
   logMessage(0, "CLIENT CONNECTED WITH IP ADDRESS: " + socket.request.connection.remoteAddress.split(':').slice(3)[0] + " AND");
   socket.on('move', data => {
-    socket.broadcast.emit('movePlayer', data => {
+    socket.broadcast.emit('movePlayer', data = {
       uuid: socket.id,
-      x: data.x,
-      y: data.y
+      xval: data.x,
+      yval: data.y
     });
   });
 });
