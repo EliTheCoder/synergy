@@ -120,14 +120,14 @@ function draw() {
   }
 
   // stopping player on keyup
-  if (cube.velocity.x < 0 && !cube.direction.left) {
+  if (cube.velocity.x < 0 && !cube.direction.left && cube.y == 0) {
     if (cube.velocity.x + cube.deaccelerationSpeed > 0) {
       cube.velocity.x = 0;
     } else {
       cube.velocity.x += cube.deaccelerationSpeed;
     }
   }
-  if (cube.velocity.x > 0 && !cube.direction.right) {
+  if (cube.velocity.x > 0 && !cube.direction.right && cube.y == 0) {
     if (cube.velocity.x - cube.deaccelerationSpeed < 0) {
       cube.velocity.x = 0;
     } else {
@@ -146,6 +146,9 @@ function draw() {
   // making sure cube is not going too fast
   if (cube.velocity.x > cube.maxSpeed) {
     cube.velocity.x = cube.maxSpeed;
+  }
+  if (cube.velocity.x < -cube.maxSpeed) {
+    cube.velocity.x = -cube.maxSpeed;
   }
 
   // bottom of screen
