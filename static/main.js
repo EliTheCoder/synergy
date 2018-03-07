@@ -22,8 +22,11 @@ cube = {
   width: 50,
   x: 0,
   y: 0,
-  maxSpeed: 5,
-  accelerationSpeed: 0.1,
+  maxSpeed: 10,
+  gravity: 0.4,
+  jumpStrength: 10,
+  accelerationSpeed: 0.5,
+  deaccelerationSpeed: 1,
   velocity: {
     x: 0,
     y: 0
@@ -33,6 +36,11 @@ cube = {
     down: false,
     left: false,
     right: false
+  },
+  jump: () => {
+    if (!cube.y) {
+      cube.velocity.y += cube.jumpStrength;
+    }
   }
 };
 
@@ -67,7 +75,7 @@ const yellowcolor = '#f2ff00';
 document.addEventListener('keydown', e => {
   switch (e.keyCode) {
     case 87:
-      cube.direction.up = true;
+      cube.jump();
       break;
     case 65:
       cube.direction.left = true;
@@ -82,9 +90,6 @@ document.addEventListener('keydown', e => {
 });
 document.addEventListener('keyup', e => {
   switch (e.keyCode) {
-    case 87:
-      cube.direction.up = false;
-      break;
     case 65:
       cube.direction.left = false;
       break;
@@ -102,10 +107,6 @@ function draw() {
   background(225);
 
   // physics
-  if (cube.velocity.y < cube.maxSpeed && cube.direction.up) {
-    cube.velocity.y += cube.accelerationSpeed;
-  }
-
   if (cube.velocity.y > -cube.maxSpeed && cube.direction.down) {
     cube.velocity.y -= cube.accelerationSpeed;
   }
@@ -119,21 +120,39 @@ function draw() {
   }
 
   // stopping player on keyup
-  if (cube.velocity.y > 0 && !cube.direction.up) {
-    cube.velocity.y -= cube.accelerationSpeed;
-  }
-  if (cube.velocity.y < 0 && !cube.direction.down) {
-    cube.velocity.y += cube.accelerationSpeed;
-  }
   if (cube.velocity.x < 0 && !cube.direction.left) {
-    cube.velocity.x += cube.accelerationSpeed;
+    if (cube.velocity.x + cube.deaccelerationSpeed > 0) {
+      cube.velocity.x = 0;
+    } else {
+      cube.velocity.x += cube.deaccelerationSpeed;
+    }
   }
   if (cube.velocity.x > 0 && !cube.direction.right) {
-    cube.velocity.x -= cube.accelerationSpeed;
+    if (cube.velocity.x - cube.deaccelerationSpeed < 0) {
+      cube.velocity.x = 0;
+    } else {
+      cube.velocity.x -= cube.deaccelerationSpeed;
+    }
   }
 
   cube.x += cube.velocity.x;
   cube.y += cube.velocity.y;
+
+  // gravity
+  if (cube.y > 0) {
+    cube.velocity.y -= cube.gravity;
+  }
+
+  // making sure cube is not going too fast
+  if (cube.velocity.x > cube.maxSpeed) {
+    cube.velocity.x = cube.maxSpeed;
+  }
+
+  // bottom of screen
+  if (cube.y < 0) {
+    cube.velocity.y = 0;
+    cube.y = 0;
+  }
 
   // rendering cubes
   push();
