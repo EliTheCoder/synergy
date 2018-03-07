@@ -22,9 +22,16 @@ function logMessage(type, message) {
     default:
       typeString = "LOG";
   }
-  let datestamp = new Date();
-  console.log(`[${typeString.toUpperCase()}] {${datestamp}} ${message.toUpperCase()}`);
+  let datestamp = "";
+  datestamp += new Date();
+  console.log(`[${typeString.toUpperCase()}] {${datestamp.toUpperCase()}} ${message.toUpperCase()}`);
 }
+
+// pull git on GitHub push
+app.post('/push', (req, res) => {
+  logMessage(0, "/push request statement: " + req);
+});
+
 // provides static file like index.html and main.js
 app.use(express.static(path.join(__dirname, '/static')));
 
