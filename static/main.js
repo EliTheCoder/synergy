@@ -13,7 +13,7 @@
 // creating canvas
 function setup() {
   const cnv = createCanvas(1000, 600);
-  cnv.setAttribute("style", "border-style: solid; border-color: black;");
+  document.getElementById("defaultCanvas0").setAttribute("style", "border-style: solid; border-color: black;");
 }
 
 // defining cube constants and variables
@@ -23,7 +23,7 @@ cube = {
   x: 0,
   y: 0,
   maxSpeed: 5,
-  accelerationSpeed: 0.1;
+  accelerationSpeed: 0.1,
   velocity: {
     x: 0,
     y: 0
@@ -39,20 +39,20 @@ cube = {
 cube2 = {
   x: 60,
   y: 0,
-  height: 50 :,
+  height: 50,
   width: 50
 }
 
 cube3 = {
   x: 120,
-  y: 0
+  y: 0,
   height: 50,
   width: 50
 }
 
 cube4 = {
   x: 180,
-  y: 0
+  y: 0,
   height: 50,
   width: 50
 }
@@ -122,8 +122,14 @@ function draw() {
   if (cube.velocity.y > 0 && !cube.direction.up) {
     cube.velocity.y -= cube.accelerationSpeed;
   }
-  if (cube.velocity.y > 0 && !cube.direction.up) {
-    cube.velocity.y -= cube.accelerationSpeed;
+  if (cube.velocity.y < 0 && !cube.direction.down) {
+    cube.velocity.y += cube.accelerationSpeed;
+  }
+  if (cube.velocity.x < 0 && !cube.direction.left) {
+    cube.velocity.x += cube.accelerationSpeed;
+  }
+  if (cube.velocity.x > 0 && !cube.direction.right) {
+    cube.velocity.x -= cube.accelerationSpeed;
   }
 
   cube.x += cube.velocity.x;
