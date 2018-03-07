@@ -150,7 +150,13 @@ function draw() {
   if (cube.velocity.x < -cube.maxSpeed) {
     cube.velocity.x = -cube.maxSpeed;
   }
-
+  
+  // cube to cube collisions
+	if (cube.y - cube2.y && cube.x - cube2.x < cube.length == cube.width){
+    cube.velocity.y = 0;
+    cube.y = cube.width;
+  }
+  
   // bottom of screen
   if (cube.y < 0) {
     cube.velocity.y = 0;
