@@ -30,7 +30,7 @@ function logMessage(type, message) {
 
 // pull git on GitHub push
 app.post('/push', (req, res) => {
-  logMessage(0, "/push request statement: " + res.ref);
+  logMessage(0, "/push request statement: " + req.body.ref);
 });
 
 // provides static file like index.html and main.js
