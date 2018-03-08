@@ -22,6 +22,8 @@ cube = {
   width: 50,
   x: 0,
   y: 0,
+  lastX: 0,
+  lastY: 0,
   maxSpeed: 10,
   gravity: 0.4,
   jumpStrength: 10,
@@ -143,7 +145,7 @@ function draw() {
   if (cube.y > 0) {
     cube.velocity.y -= cube.gravity;
   }
-  
+
   // not airborne
   if (!cube.y) {
     cube.collided = true;
@@ -155,17 +157,6 @@ function draw() {
   }
   if (cube.velocity.x < -cube.maxSpeed) {
     cube.velocity.x = -cube.maxSpeed;
-  }
-
-  // cube to cube collisions
-  if (cube.y - cube2.y < cube.height && cube.x - cube2.x < cube.width - 1) {
-    cube.velocity.y = 0;
-    cube.y = cube.height;
-    cube.collided = true
-  }
-  if (cube.x - cube2.x > cube.width && cube.y - cube2.y < cube.height - 1) {
-    cube.velocity.x = 0;
-    cube.x = cube.width;
   }
 
   // bottom of screen
