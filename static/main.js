@@ -156,6 +156,10 @@ function draw() {
     cube.velocity.y = 0;
     cube.y = cube.height;
   }
+  if (cube.x - cube2.x < cube.width && cube.y - cube2.y < cube.height - 1) {
+    cube.velocity.x = 0;
+    cube.x = cube.width;
+  }
 
   // bottom of screen
   if (cube.y < 0) {
