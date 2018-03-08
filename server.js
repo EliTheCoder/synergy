@@ -6,6 +6,7 @@ const port = 80;
 const express = require('express');
 const path = require("path");
 const app = express();
+const util = require('util');
 
 function logMessage(type, message) {
   let typeString;
@@ -29,7 +30,7 @@ function logMessage(type, message) {
 
 // pull git on GitHub push
 app.post('/push', (req, res) => {
-  logMessage(0, "/push request statement: " + req.ref);
+  logMessage(0, "/push request statement: " + util.inspect(req, false, null));
 });
 
 // provides static file like index.html and main.js
