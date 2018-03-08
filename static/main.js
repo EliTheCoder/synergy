@@ -27,6 +27,7 @@ cube = {
   jumpStrength: 10,
   accelerationSpeed: 0.5,
   deaccelerationSpeed: 1,
+  collided: true,
   velocity: {
     x: 0,
     y: 0
@@ -120,14 +121,14 @@ function draw() {
   }
 
   // stopping player on keyup
-  if (cube.velocity.x < 0 && !cube.direction.left && cube.y == 0) {
+  if (cube.velocity.x < 0 && !cube.direction.left && cube.collided) {
     if (cube.velocity.x + cube.deaccelerationSpeed > 0) {
       cube.velocity.x = 0;
     } else {
       cube.velocity.x += cube.deaccelerationSpeed;
     }
   }
-  if (cube.velocity.x > 0 && !cube.direction.right && cube.y == 0) {
+  if (cube.velocity.x > 0 && !cube.direction.right && cube.collided) {
     if (cube.velocity.x - cube.deaccelerationSpeed < 0) {
       cube.velocity.x = 0;
     } else {
@@ -142,6 +143,11 @@ function draw() {
   if (cube.y > 0) {
     cube.velocity.y -= cube.gravity;
   }
+  
+  // not airborne
+  if (!cube.y) {
+    cube.collided = true;
+  }
 
   // making sure cube is not going too fast
   if (cube.velocity.x > cube.maxSpeed) {
@@ -155,6 +161,7 @@ function draw() {
   if (cube.y - cube2.y < cube.height && cube.x - cube2.x < cube.width - 1) {
     cube.velocity.y = 0;
     cube.y = cube.height;
+    cube.collided = true
   }
   if (cube.x - cube2.x < cube.width && cube.y - cube2.y < cube.height - 1) {
     cube.velocity.x = 0;
