@@ -42,12 +42,18 @@ const server = app.listen(process.env.PORT || port, () => {
 const io = require('socket.io')(server);
 
 io.on('connection', socket => {
-  logMessage(0, "CLIENT CONNECTED WITH IP ADDRESS: " + socket.request.connection.remoteAddress.split(':').slice(3)[0] + " AND");
+  logMessage(0, "CLIENT CONNECTED WITH IP ADDRESS: " + socket.request.connection.remoteAddress.split(':').slice(3)[0]);
   socket.on('move', data => {
-    socket.broadcast.emit('movePlayer', data = {
-      uuid: socket.id,
+    socket.broadcast.emit('movePlayer', {
+      //uuid: socket.id,
       xval: data.x,
       yval: data.y
     });
+  });
+  socket.on('sudo', data => {
+    socket.broadcast.emit('sudo', data);
+  });
+  socket.on('say', data => {
+    socket.broadcast.emit('say', data);
   });
 });
