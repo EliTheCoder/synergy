@@ -39,12 +39,7 @@ cube = {
   jumpStrength: 10,
   accelerationSpeed: 0.5,
   deaccelerationSpeed: 1,
-<<<<<<< HEAD
   stacked: false,
-=======
-  collided: true,
-  sideCollide: false,
->>>>>>> 78452cd2b14aeec283c5e3a6a88e7fcc99bdc0c4
   velocity: {
     x: 0,
     y: 0
@@ -181,7 +176,7 @@ function draw() {
   if (cube.y > 0 && !cube.stacked) {
     cube.velocity.y -= cube.gravity;
   }
-  
+
   // not airborne
   if (!cube.y) {
     cube.collided = true;
@@ -214,7 +209,6 @@ function draw() {
       }
     } else {
 
-<<<<<<< HEAD
     }
   */
   // checking if cube is not stacked
@@ -228,27 +222,6 @@ function draw() {
     cube.velocity.x = 0;
     cube.x = 0;
   }
-=======
-  // cube to cube y collisions
-  if (cube.y - cube2.y < cube.height && cube.x - cube2.x < cube.width - 1 && cube.sideCollide = false) {
-    cube.velocity.y = 0;
-    cube.y = cube.height;
-    cube.collided = true
-    cube.sideCollide = false
-  }
-  else {
-    cube.collided = false
-  }
-  
-  // cube to cube x collision
-  if (cube.x - cube2.x < cube.width && cube.collided == false) {
-    cube.velocity.x = 0
-    cube.x = cube.width
-    cube.collided = false
-    cube.sideCollide = true
-  }
-
->>>>>>> 78452cd2b14aeec283c5e3a6a88e7fcc99bdc0c4
   // bottom of screen
   if (cube.y < 0) {
     cube.velocity.y = 0;
