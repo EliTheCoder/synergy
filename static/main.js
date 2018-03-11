@@ -36,6 +36,12 @@ function say(text) {
 
 const socket = io();
 
+let cubecolor;
+
+socket.on('setColor', value => {
+  cubecolor = value;
+});
+
 // defining cube constants and variables
 cube = {
   height: 50,
@@ -66,6 +72,13 @@ cube = {
     }
   }
 };
+
+cube1 = {
+  x: 0,
+  y: 0,
+  height: 50,
+  width: 50
+}
 
 cube2 = {
   x: 60,
@@ -126,8 +139,8 @@ document.addEventListener('keyup', e => {
 });
 
 socket.on("movePlayer", data => {
-  cube2.x = data.xval;
-  cube2.y = data.yval;
+  eval("cube" + data.colorval).x = data.xval;
+  eval("cube" + data.colorval).y = data.yval;
 });
 
 socket.on("sudo", data => {
@@ -146,7 +159,9 @@ function draw() {
   if (cube.lastX !== cube.x || cube.lastY !== cube.y) {
     socket.emit("move", {
       x: cube.x - cube.lastX,
-      y: cube.y - cube.lastY
+      y: cube.y - cube.lastY,
+      color: cubecolor
+
     });
   }
 
@@ -190,6 +205,8 @@ function draw() {
   // not airborne
   if (!cube.y) {
     cube.collided = true;
+  } else {
+    cube.collided = false;
   }
 
   // making sure cube is not going too fast
@@ -238,11 +255,15 @@ function draw() {
     cube.y = 0;
   }
 
+  // setting my color cube's x and y
+  eval("cube" + cubecolor).x = cube.x;
+  eval("cube" + cubecolor).y = cube.y;
+
   // rendering cubes
   push();
   fill(bluecolor);
   noStroke();
-  rect(cube.x, cube.y * -1 + height - cube.height, cube.width, cube.height);
+  rect(cube1.x, cube1.y * -1 + height - cube1.height, cube1.width, cube1.height);
   pop();
 
   push();
@@ -265,7 +286,7 @@ function draw() {
 
   if (frameCount < 300) {
     background(255);
-    image(logo, width / 2, height / 2)
+    image(logo, width / 2, height / 2);
   }
 
 }
