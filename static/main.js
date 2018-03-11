@@ -10,17 +10,27 @@
 // We <3 Tacos
 // Enjoy :)
 
+let logo;
+
+function preload() {
+  logo = loadImage("favicon.png");
+}
 // creating canvas
 function setup() {
   const cnv = createCanvas(1000, 600);
   document.getElementById("defaultCanvas0").setAttribute("style", "border-style: solid; border-color: black; border-radius: 5px;");
+  imageMode(CENTER);
 }
 
 let color = "black";
 let name = "anon";
 
 function say(text) {
-  socket.emit("say", {name: name, text: text, color: color});
+  socket.emit("say", {
+    name: name,
+    text: text,
+    color: color
+  });
   console.log(name + ": " + text);
 }
 
@@ -252,5 +262,10 @@ function draw() {
   noStroke();
   rect(cube4.x, cube4.y * -1 + height - cube4.height, cube4.width, cube4.height);
   pop();
+
+  if (frameCount < 300) {
+    background(255);
+    image(logo, width / 2, height / 2)
+  }
 
 }
