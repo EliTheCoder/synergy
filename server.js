@@ -8,7 +8,7 @@ const path = require("path");
 const app = express();
 const util = require('util');
 
-let clients = 0;
+let clients = [0, 0, 0, 0];
 
 function logMessage(type, message) {
   let typeString;
@@ -47,13 +47,13 @@ const io = require('socket.io')(server);
 io.on('connection', socket => {
   logMessage(0, "CLIENT CONNECTED WITH IP ADDRESS: " + socket.request.connection.remoteAddress.split(':').slice(3)[0]);
 
-  if (clients < 4) {
-    socket.emit('setColor', clients + 1);
+  if (clients.indexOf(0) !== -1) {
+    socket.emit('setColor', clients.indexOf(0) + 1);
+    clients[clients.indexOf(0)] = socket.id;
   } else {
     socket.emit('setColor', 0);
   }
 
-  clients++;
 
   socket.on('move', data => {
     socket.broadcast.emit('movePlayer', {
@@ -64,7 +64,12 @@ io.on('connection', socket => {
   });
 
   socket.on('disconnect', reason => {
-    clients--;
+    socket.broadcast.emit('movePlayer', {
+      colorval: clients.indexOf(socket.id) + 1,
+      xval: 0,
+      yval: 0
+    });
+    clients[clients.indexOf(socket.id)] = 0;
     logMessage(0, "client disconnected: reason: " + reason + ". clients online: " + clients);
   });
 

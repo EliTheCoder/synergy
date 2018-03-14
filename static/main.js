@@ -198,7 +198,7 @@ function draw() {
   cube.y += cube.velocity.y;
 
   // gravity
-  if (cube.y > 0 && !cube.stacked) {
+  if (cube.y > 0) {
     cube.velocity.y -= cube.gravity;
   }
 
@@ -216,39 +216,15 @@ function draw() {
   if (cube.velocity.x < -cube.maxSpeed) {
     cube.velocity.x = -cube.maxSpeed;
   }
-  /*
-    // collisions
-    if (cube.x < cube2.x + cube2.width && cube.x + cube.width > cube2.x && cube.y < cube2.y + cube2.height && cube.height + cube.y > cube2.y) {
-      if (cube.velocity.y) {
-        switch (cube.velocity.x > cube.velocity.y) {
-          case false:
-            if (!cube.stacked) {
-              cube.velocity.x = 0;
-              cube.x = cube2.x + cube2.width;
-            }
-            break;
-          case true:
-            cube.velocity.y = 0;
-            cube.y = cube2.y + cube2.height;
-            cube.stacked = true;
-            break;
-        }
-      }
-    } else {
-
-    }
-  */
-  // checking if cube is not stacked
-  //if ()
 
   if (cube.x > width - cube.width) {
     cube.velocity.x = 0;
     cube.x = width - cube.width;
   }
   if (cube.x < 0) {
-    cube.velocity.x = 0;
     cube.x = 0;
   }
+
   // bottom of screen
   if (cube.y < 0) {
     cube.velocity.y = 0;
@@ -287,6 +263,7 @@ function draw() {
   if (frameCount < 300) {
     background(255);
     image(logo, width / 2, height / 2);
+    //filter(BLUR, 2);
   }
 
 }
