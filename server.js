@@ -1,3 +1,5 @@
+"use strict";
+
 // change this if you want:
 
 const port = 80;
