@@ -39,7 +39,12 @@ const socket = io();
 let cubecolor;
 
 socket.on('setColor', value => {
-  cubecolor = value;
+  if (value) {
+    cubecolor = value;
+  } else {
+    document.write("Too many clients connected. That sucks :(");
+    cubecolor = "";
+  }
 });
 
 // defining cube constants and variables
@@ -192,6 +197,11 @@ function draw() {
     } else {
       cube.velocity.x -= cube.deaccelerationSpeed;
     }
+  }
+
+  // collisions
+  if (cube.x + cube.velocity.x > cube2.x - cube.width && cube.x + cube.velocity.x < cube2.x + cube2.width && cube.y < cube2.y + cube2.height) {
+    cube.velocity.x = 0;
   }
 
   cube.x += cube.velocity.x;

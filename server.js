@@ -88,6 +88,6 @@ io.on('connection', socket => {
   });
 });
 
-setInterval(() => {
+setTimeout(() => {
   logMessage(0, "clients connected: " + clients);
 }, 60000);
