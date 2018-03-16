@@ -36,7 +36,7 @@ function say(text) {
 
 const socket = io();
 
-let cubecolor;
+let cubecolor = 0;
 
 socket.on('setColor', value => {
   if (value) {
@@ -201,6 +201,11 @@ function draw() {
 
   // collisions
   if (cube.x + cube.velocity.x > cube2.x - cube.width && cube.x + cube.velocity.x < cube2.x + cube2.width && cube.y < cube2.y + cube2.height) {
+    if (cube.velocity.x > 0) {
+      cube.x = cube2.x - cube.width;
+    } else {
+      cube.x = cube2.x + cube2.width;
+    }
     cube.velocity.x = 0;
   }
 
@@ -273,7 +278,6 @@ function draw() {
   if (frameCount < 300) {
     background(255);
     image(logo, width / 2, height / 2);
-    //filter(BLUR, 2);
   }
 
 }
