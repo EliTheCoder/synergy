@@ -36,7 +36,7 @@ function say(text) {
 
 const socket = io();
 
-let cubecolor = 0;
+let cubecolor = "";
 
 socket.on('setColor', value => {
   if (value) {
