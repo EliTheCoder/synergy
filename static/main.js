@@ -199,6 +199,9 @@ function draw() {
     }
   }
 
+  cube.x += cube.velocity.x;
+  cube.y += cube.velocity.y;
+  
   // gravity
   if (cube.y > 0) {
     cube.velocity.y -= cube.gravity;
